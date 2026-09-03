@@ -1578,7 +1578,6 @@ static command_result GetBlockList(color_ostream &stream, const BlockRequest *in
 
 static command_result GetTiletypeList(color_ostream &stream, const EmptyMessage *in, TiletypeList *out)
 {
-    int count = 0;
     FOR_ENUM_ITEMS(tiletype, tt)
     {
         Tiletype * type = out->add_tiletype_list();
@@ -1592,7 +1591,6 @@ static command_result GetTiletypeList(color_ostream &stream, const EmptyMessage 
         type->set_material(TranslateMaterial(tileMaterial(tt)));
         type->set_variant(TranslateVariant(tileVariant(tt)));
         type->set_direction(tileDirection(tt).getStr());
-        count++;
     }
     return CR_OK;
 }
@@ -1692,9 +1690,6 @@ static command_result GetUnitListInside(color_ostream &stream, const BlockReques
             if (unit->pos.y < in->min_y() * 16 || unit->pos.y >= in->max_y() * 16)
                 continue;
         }
-
-        using df::global::cur_year;
-        using df::global::cur_year_tick;
 
         send_unit->set_age(Units::getAge(unit, false));
 
